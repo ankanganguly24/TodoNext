@@ -3,9 +3,10 @@ import React, { useState } from 'react'
 
 const page = () => {
 
-  const [task, setTask] = useState("")
-  const [desc, setDesc] = useState("")
+  const [task, setTask] = useState("")   //todo task
+  const [desc, setDesc] = useState("")  //description
   const [mainTask, setMainTask] = useState([])
+  
 
   const submitHandler = (e) => {
     e.preventDefault()
@@ -14,18 +15,29 @@ const page = () => {
     setDesc("")
   } 
 
-  let renderTask = <h4>No Tasks for now</h4>;
+  const deletehandler = (i) => {
+      let copytask = [...mainTask]
+      copytask.splice(i,1)
+      setMainTask(copytask)
+  }
+
+  let renderTask = <h6 className='font-light'>No Tasks for now</h6>;
+
+  
 
   if(mainTask.length > 0){
     renderTask = mainTask.map((t,i)=>{
       return (
-        <li className='flex item-center justify-between'>
+
+      <li key={i} className='flex item-center justify-between'>
         <div className='flex justify-between mb-3 w-2/3'>
-          <h4 className='font-serif'>Task:   {t.task}</h4>
-          <h6 className='font-serif'>Description:  {t.desc}</h6>
-          <button className='bg-red-300 text-white rounded font-bold'> Delete </button>
-          </div>
-        </li>
+          <h4 className=' font-bold text-xl'>{t.task}</h4>
+          <h6 className='font-serif text-lg'>{t.desc}</h6>
+          <button onClick={()=>{
+          deletehandler(i)
+        }} className='bg-red-600 text-white rounded font-light pl-1 pr-1'> Delete </button>
+        </div>
+      </li>
   
     )})
   }
@@ -61,3 +73,4 @@ const page = () => {
 }
 
 export default page
+ 
